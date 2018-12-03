@@ -1,6 +1,2 @@
-if not tmr.create():alarm(5000, tmr.ALARM_AUTO, function()
-  print("hey there")
-end)
-then
-  print("whoopsie")
-end
+node.flashindex("_init")()
+require("telnet"):open(_,_,23)
