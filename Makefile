@@ -35,4 +35,4 @@ lfs: build-lfs-image flash-lfs-image
 clean:
 	rm luac.out
 	
-all: upload flash-lfs-image run
+all: upload lfs run
