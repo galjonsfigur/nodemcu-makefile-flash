@@ -13,7 +13,7 @@ default: run
 
 upload:
 	@echo "Uploading lua files"
-	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) upload $(addsuffix $(notdir $(SRC_FILES)), $(SRC_FILES):)
+	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) upload $(join $(addsuffix :, $(SRC_FILES)), $(notdir $(SRC_FILES)))
 		
 run:
 	@echo "Running main file"
