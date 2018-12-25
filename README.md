@@ -19,12 +19,15 @@ Project directory structure:
 #### Makefile targets:
 
  - `upload`: Uploads all lua files in src directory.
+ - `upload-release`: Compiles and uploads all lua files in src directory.
  - `run`: Executes MAIN_FILE.
+ - `run-release`: Executes precompiled version ofMAIN_FILE.
  - `build-lfs-image`: Creates LFS image.
  - `flash-lfs-image`: Uploads and reloads LFS image.
- - `all`: All above in the right order.
  - `lfs`: Creates, uploads and reloads LFS image.
- 
+ - `all`: Uploads Lua code, creates and installs LFS image and runs main file. 
+ - `all-release`: Compiles and uploads Lua code, creates and installs LFS image and runs main file.
+
 When used with no specified target, `run` target is used.
 
 
