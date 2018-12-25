@@ -1,6 +1,6 @@
 ## NodeMCU makefile flash
 
-A simple makefile to simplify process of uploading Lua code to ESP8266. Supports LFS. Uses luac.cross to make LFS image and nodemcu-uploader to upload files to SPIFFS. This repository contains example use of this makefile using LFS image with telnet from [nodemcu-firmware](https://github.com/nodemcu/nodemcu-firmware).
+A simple makefile to simplify process of uploading Lua code to ESP8266. Supports LFS. Uses luac.cross to make LFS image and [nodemcu-uploader](https://github.com/kmpm/nodemcu-uploader) to upload files to SPIFFS. This repository contains example use of this makefile using LFS image with telnet from [nodemcu-firmware](https://github.com/nodemcu/nodemcu-firmware).
 
 ### How to use
 
