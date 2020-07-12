@@ -12,10 +12,18 @@ LC_FILES  := $(SRC_FILES:.lua=.lc)
 .PHONY: default
 default: run
 
+%.lc: %.lua
+	@echo "Compiling Lua file:" $@
+	$(LUAC_CROSS) -s -o $@ $<
+
 upload:
 	@echo "Uploading lua files"
 	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) upload $(join $(addsuffix :, $(SRC_FILES)), $(notdir $(SRC_FILES)))
-		
+
+upload-release: $(LC_FILES)
+	@echo "Uploading compiled Lua files"
+	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) upload $(join $(addsuffix :, $(LC_FILES)), $(notdir $(LC_FILES)))
+
 run:
 	@echo "Running main file"
 	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) file do $(MAIN_FILE).lua
@@ -23,29 +31,21 @@ run:
 run-release:
 	@echo "Running main file"
 	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) file do $(MAIN_FILE).lc
-	
+
 build-lfs-image:
 	@echo "Building LFS image"
 	$(LUAC_CROSS) -f $(LFS_FILES)
-	
+
 flash-lfs-image:
 	@echo "Installing LFS image"
-	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) upload luac.out
+	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) upload luac.cross.out
 # Workaround to https://github.com/kmpm/nodemcu-uploader/issues/76
 	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) upload flashreload.lua
 	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) file do flashreload.lua
+
+clean:
+	rm luac.cross.out $(LC_FILES)
 	
 lfs: build-lfs-image flash-lfs-image
-
-%.lc: %.lua
-	@echo "Compiling Lua file:" $@
-	$(LUAC_CROSS) -s -o $@ $<
-	
-lua-release: $(LC_FILES)
-	@echo "Uploading compiled Lua files"
-	$(NODEMCU_UPLOADER) --port $(NODEMCU_PORT) upload $(join $(addsuffix :, $(LC_FILES)), $(notdir $(LC_FILES)))	
-clean:
-	rm luac.out $(LC_FILES)
-	
 all: upload lfs run
-all-release: lua-release lfs run-release 
+all-release: upload-release lfs run-release 

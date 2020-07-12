@@ -1,1 +1,1 @@
-print(node.flashreload("luac.out"))
+print(node.flashreload("luac.cross.out"))
